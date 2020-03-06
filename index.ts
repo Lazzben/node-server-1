@@ -8,7 +8,8 @@ const publicPath = p.resolve(__dirname, 'public')
 
 server.on('request', (request: http.IncomingMessage, response: http.ServerResponse) => {
   const { url: path, method } = request
-  if (method !== 'get') {
+  console.log(method)
+  if (method != 'GET') {
     response.statusCode = 200
     response.end('this is a fake response')
     return
