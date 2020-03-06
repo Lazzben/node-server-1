@@ -7,7 +7,12 @@ const server = http.createServer()
 const publicPath = p.resolve(__dirname, 'public')
 
 server.on('request', (request: http.IncomingMessage, response: http.ServerResponse) => {
-  const { url: path } = request
+  const { url: path, method } = request
+  if (method !== 'get') {
+    response.statusCode = 200
+    response.end('this is a fake response')
+    return
+  }
   const { pathname } = url.parse(path)
   const fileName = pathname.substr(1)
   fs.readFile(p.resolve(publicPath, fileName), (err, data) => {
