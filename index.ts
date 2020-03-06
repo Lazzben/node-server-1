@@ -5,6 +5,7 @@ import * as url from 'url'
 
 const server = http.createServer()
 const publicPath = p.resolve(__dirname, 'public')
+const cacheAge = 3600 * 24 * 365
 
 server.on('request', (request: http.IncomingMessage, response: http.ServerResponse) => {
   const { url: path, method } = request
@@ -35,6 +36,7 @@ server.on('request', (request: http.IncomingMessage, response: http.ServerRespon
           response.end('Server busy')
       }
     } else {
+      response.setHeader('Cache-Control', `public, max-age=${cacheAge}`)
       response.end(data)
     }
   })
